@@ -1,0 +1,25 @@
+networks:
+  default:
+    name: demo_network
+services:
+  demo_postgres:
+    hostname: demo_postgres
+    container_name: demo_postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
+    networks:
+      - default
+  demo_postgres_adminer:
+    container_name: demo_postgres_adminer
+    image: adminer:latest
+    ports:
+      - 5431:8080
+    networks:
+      - default
+    depends_on:
+      - demo_postgres
