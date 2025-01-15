@@ -19,7 +19,7 @@ export class UsersService {
     return this.usersRepository.find({ relations: ['posts'] });
   }
 
-  async findOne(id: number): Promise<User | null> {
+  async findOne(id: string): Promise<User | null> {
     const user = await this.usersRepository.findOne({
       where: { id },
       relations: ['posts'],
@@ -27,7 +27,7 @@ export class UsersService {
     return user;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.usersRepository.delete(id);
   }
 
@@ -37,7 +37,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     return this.dataSource.transaction(async (manager) => {
       const usersRepository = manager.getRepository(User);
 

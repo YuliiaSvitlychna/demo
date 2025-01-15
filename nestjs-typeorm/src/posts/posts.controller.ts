@@ -39,9 +39,9 @@ export class PostsController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
-      const post = await this.postsService.findOne(+id);
+      const post = await this.postsService.findOne(id);
       if (post === null) {
-        throw new PostNotFoundError(+id);
+        throw new PostNotFoundError(id);
       }
       return post;
     } catch (error: any) {
@@ -52,9 +52,9 @@ export class PostsController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     try {
-      const post = await this.postsService.update(+id, updatePostDto);
+      const post = await this.postsService.update(id, updatePostDto);
       if (post === null) {
-        throw new PostNotFoundError(+id);
+        throw new PostNotFoundError(id);
       }
       return post;
     } catch (error: any) {
@@ -65,7 +65,7 @@ export class PostsController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
-      const result = await this.postsService.remove(+id);
+      const result = await this.postsService.remove(id);
       if (result.affected === 0) {
         throw new PostNotDeletedError();
       }

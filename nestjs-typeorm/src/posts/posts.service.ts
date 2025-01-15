@@ -21,7 +21,7 @@ export class PostsService {
     return this.postsRepository.find({ relations: ['author'] });
   }
 
-  async findOne(id: number): Promise<Post | null> {
+  async findOne(id: string): Promise<Post | null> {
     const post = await this.postsRepository.findOne({
       where: { id },
       relations: ['author'],
@@ -29,7 +29,7 @@ export class PostsService {
     return post;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.postsRepository.delete(id);
   }
 
@@ -56,7 +56,7 @@ export class PostsService {
     });
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto) {
+  async update(id: string, updatePostDto: UpdatePostDto) {
     return this.dataSource.transaction(async (manager) => {
       const postsRepository = manager.getRepository(Post);
 
