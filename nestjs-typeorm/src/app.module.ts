@@ -19,7 +19,7 @@ import { Post } from './posts/entities/post.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         entities: [User, Post],
-        synchronize: true,
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),
