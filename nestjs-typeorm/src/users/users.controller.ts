@@ -8,17 +8,25 @@ import {
   Delete,
   BadRequestException,
 } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserNotFoundError } from 'src/users/errors/user-not-found.error';
 import { UserNotDeletedError } from 'src/users/errors/user-not-deleted.error';
+import { fakeUser } from './fakes/user.fake';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    schema: {
+      example: fakeUser,
+    },
+  })
   async create(@Body() createUserDto: CreateUserDto) {
     try {
       return await this.usersService.create(createUserDto);
@@ -28,6 +36,12 @@ export class UsersController {
   }
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    schema: {
+      example: [fakeUser, fakeUser, fakeUser],
+    },
+  })
   async findAll() {
     try {
       return await this.usersService.findAll();
@@ -37,6 +51,12 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    schema: {
+      example: fakeUser,
+    },
+  })
   async findOne(@Param('id') id: string) {
     try {
       const user = await this.usersService.findOne(id);
@@ -50,6 +70,12 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: 200,
+    schema: {
+      example: fakeUser,
+    },
+  })
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
       const user = await this.usersService.update(id, updateUserDto);
@@ -63,6 +89,12 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    schema: {
+      example: { status: 'ok' },
+    },
+  })
   async remove(@Param('id') id: string) {
     try {
       const result = await this.usersService.remove(id);
